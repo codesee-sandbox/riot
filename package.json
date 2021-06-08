@@ -46,6 +46,8 @@
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",
+    "@codesee/babel-plugin-instrument": "^0.33.2",
+    "@codesee/tracker": "^0.33.2",
     "@riotjs/babel-preset": "1.0.0",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-json": "^4.1.0",
