@@ -48,7 +48,8 @@ module.exports = {
           ]
         }
       },
-      presets: ['@riotjs/babel-preset']
+      presets: ['@riotjs/babel-preset'],
+      plugins: [['@codesee/instrument', {hosted: true}]]
     })
   ]
 }
