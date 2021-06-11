@@ -1,35 +1,39 @@
-const commonjs = require('@rollup/plugin-commonjs')
-const json = require('@rollup/plugin-json')
-const {nodeResolve} = require('@rollup/plugin-node-resolve')
-const babel = require('rollup-plugin-babel')
-const emptyFile = 'export default undefined'
+const commonjs = require("@rollup/plugin-commonjs");
+const json = require("@rollup/plugin-json");
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
+const babel = require("rollup-plugin-babel");
+const emptyFile = "export default undefined";
 
 // ignore builtin requires
 function ignore() {
   return {
     transform(code, id) {
-      if (!id.includes('commonjs-external')) return
+      if (!id.includes("commonjs-external")) return;
 
       return {
         code: emptyFile,
-        map: null
-      }
-    }
-  }
+        map: null,
+      };
+    },
+  };
 }
 
 module.exports = {
-  output: [{
-    banner: '/* Riot WIP, @license MIT */',
-    name: 'riot'
-  }],
-  onwarn: function(error) {
-    if (/external dependency|Circular dependency/.test(error.message)) return
-    console.error(error.message) // eslint-disable-line
+  output: [
+    {
+      banner: "/* Riot WIP, @license MIT */",
+      name: "riot",
+    },
+  ],
+  onwarn: function (error) {
+    if (/external dependency|Circular dependency/.test(error.message)) return;
+    console.error(error.message); // eslint-disable-line
   },
   plugins: [
     ignore(),
-    nodeResolve(),
+    nodeResolve({
+      browser: true,
+    }),
     commonjs(),
     json(),
     babel({
@@ -38,18 +42,16 @@ module.exports = {
         test: {
           plugins: [
             [
-              'istanbul',
+              "istanbul",
               {
-                exclude: [
-                  '**/*.spec.js'
-                ]
-              }
-            ]
-          ]
-        }
+                exclude: ["**/*.spec.js"],
+              },
+            ],
+          ],
+        },
       },
-      presets: ['@riotjs/babel-preset'],
-      plugins: [['@codesee/instrument', {hosted: true}]]
-    })
-  ]
-}
+      presets: ["@riotjs/babel-preset"],
+      plugins: [["@codesee/instrument", { hosted: true }]],
+    }),
+  ],
+};
